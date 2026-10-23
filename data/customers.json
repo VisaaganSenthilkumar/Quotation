@@ -1,0 +1,24 @@
+[
+  {
+    "customer_code": "MPI",
+    "customer_name": "MPI Corporation",
+    "contact_name": "Mx. Debbie Huang",
+    "address_line1": "No. 155, Chung-Ho St.,Chu-Pei City,",
+    "address_line2": "Hsinchu County 302, Taiwan, R.O.C.",
+    "address_line3": "",
+    "address_line4": "",
+    "greeting_name": "Debbie",
+    "active": true
+  },
+  {
+    "customer_code": "MMS",
+    "customer_name": "MMS Corporation",
+    "contact_name": "Contact name",
+    "address_line1": "Address line 1",
+    "address_line2": "Address line 2",
+    "address_line3": "Address line 3",
+    "address_line4": "Address line 4",
+    "greeting_name": "Dear Mr.Customer",
+    "active": true
+  }
+]

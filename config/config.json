@@ -1,0 +1,20 @@
+{
+  "company_name": "ECV Interconnect Solutions Pvt. Ltd.",
+  "address_line1": "10/18 Union Road, Narasimhanaickenpalayam,",
+  "address_line2": "Coimbatore ,Tamilnadu, India, Pin Code - 641031",
+  "address_line3": "",
+  "phone": "",
+  "email": "✉ pcb@ecvendors.com",
+  "website": "🌐 www.ecvendors.com",
+  "logo_path": "C:/Users/30050201/elango/code/Quotation/config/Logo.jpg",
+  "quotation_output_folder": "output/quotations",
+  "currency": "USD",
+  "company_code": "ECV",
+  "terms": [
+    "This quote covers the following activities but not limited to, Input analysis, symbol and footprint creation, schematic capture, placement, layout design and Gerber Generation, Validation.",
+    "Our invoices will be raised upon completion of activity as mentioned in this Quotation. Settlement is requested within 45 days of receipt of invoice.",
+    "ECV Interconnect Solutions Private Limited reserves the right to modify this quotation on explainable grounds and due to changes in scope of the project or understanding of the same.",
+    "Kindly refer the Quotation number in your Purchase Order and other related document.",
+    "The total price is inclusive of GST as applicable."
+  ]
+}
