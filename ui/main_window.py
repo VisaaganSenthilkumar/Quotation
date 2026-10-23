@@ -366,7 +366,7 @@ class MainWindow(QMainWindow):
         output = QLineEdit(self.config.get("quotation_output_folder", "output/quotations"))
         terms = QListWidget()
         terms.addItems(self.config.get("terms", []))
-        logo_browse.clicked.connect(lambda: self._browse_logo(logo, dialog))
+        logo_browse.clicked.connect(lambda: self._browse_logo(logo, dialog, self.paths["root"]))
         form.addRow("Company name", company)
         form.addRow("Address line 1", address_line1)
         form.addRow("Address line 2", address_line2)
@@ -399,7 +399,7 @@ class MainWindow(QMainWindow):
             save_json(self.paths["config"], self.config)
 
     @staticmethod
-    def _browse_logo(logo_field: QLineEdit, parent: QWidget):
+    def _browse_logo(logo_field: QLineEdit, parent: QWidget, root: Path):
         logo_path, _ = QFileDialog.getOpenFileName(
             parent,
             "Select company logo",
@@ -407,4 +407,9 @@ class MainWindow(QMainWindow):
             "Image files (*.png *.jpg *.jpeg *.bmp);;All files (*.*)",
         )
         if logo_path:
+            # Save logos inside the app folder as relative paths so they keep working if the folder moves.
+            try:
+                logo_path = Path(logo_path).resolve().relative_to(Path(root).resolve()).as_posix()
+            except ValueError:
+                pass
             logo_field.setText(logo_path)

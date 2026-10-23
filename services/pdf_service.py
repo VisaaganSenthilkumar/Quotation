@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import re
+import sys
 from decimal import Decimal, InvalidOperation
 from pathlib import Path
 
@@ -129,6 +130,22 @@ def draw_page_background(canvas, document) -> None:
     canvas.restoreState()
 
 
+APP_ROOT = Path(sys.executable).resolve().parent if getattr(sys, "frozen", False) else Path(__file__).resolve().parent.parent
+DEFAULT_LOGO = APP_ROOT / "config" / "Logo.jpg"
+
+
+def resolve_logo_path(logo: str) -> Path | None:
+    """Find the logo file. Relative paths are read from the app folder, so the
+    project still works after being copied to another computer."""
+    if logo:
+        path = Path(logo)
+        if not path.is_absolute():
+            path = APP_ROOT / path
+        if path.is_file():
+            return path
+    return DEFAULT_LOGO if DEFAULT_LOGO.is_file() else None
+
+
 def sanitize_filename(value: str) -> str:
     value = re.sub(r'[<>:"/\\|?*\x00-\x1f]', "_", value).strip(" .")
     return value or "quotation"
@@ -170,11 +187,11 @@ def create_quotation_pdf(path: Path, config: dict, customer: dict, quotation: di
     document = SimpleDocTemplate(str(path), pagesize=A4, rightMargin=PAGE_MARGIN_RIGHT * mm, leftMargin=PAGE_MARGIN_LEFT * mm, topMargin=PAGE_MARGIN_TOP * mm, bottomMargin=PAGE_MARGIN_BOTTOM * mm, onFirstPage=draw_page_background)
     table_header = ParagraphStyle("TableHeader", parent=small, fontName=TABLE_HEADER_FONT, fontSize=TABLE_HEADER_FONT_SIZE, leading=TABLE_HEADER_LINE_SPACING, textColor=pdf_color(TABLE_HEADER_TEXT_COLOR), alignment=text_alignment(TABLE_HEADER_ALIGNMENT))
     story = []
-    logo = config.get("logo_path", "")
+    logo = resolve_logo_path(config.get("logo_path", ""))
     address_lines = [config.get(key, "") for key in ("address_line1", "address_line2", "address_line3")]
     contact_lines = [config.get(key, "") for key in ("phone", "email", "website")]
-    if logo and Path(logo).is_file():
-        logo_content = Image(logo, width=LOGO_WIDTH * mm, height=LOGO_HEIGHT * mm, kind="proportional")
+    if logo:
+        logo_content = Image(str(logo), width=LOGO_WIDTH * mm, height=LOGO_HEIGHT * mm, kind="proportional")
     else:
         logo_content = Paragraph("COMPANY<br/>LOGO", centered)
     company_address = ParagraphStyle(
